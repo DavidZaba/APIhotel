@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="../assets/css/styles.min.css" />
-    <title>Nido Sky</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nido Sky - Reservas</title>
     <link rel="shortcut icon" type="image/png" href="../assets/images/logos/nidosky.png" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-</head>
-
-<body>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.min.css" />
     <style>
-        /* Estilos generales de la reserva */
+        .form-label {
+            text-align: center;
+        }
         body {
             background-color: #e0e0e0;
-            /* Fondo claro para toda la página */
             color: #333;
-            /* Texto oscuro */
         }
-
         .btn-status {
             border: none;
             padding: 5px 10px;
@@ -28,233 +25,135 @@
             font-weight: bold;
             border-radius: 5px;
         }
-
-        .brand-logo {
-            background-color: #333;
-            /* Color de fondo del logo */
-            padding: 20px;
-        }
-
         .btn-reservada {
             background-color: #00a859;
-            /* Verde para reservada */
-            color: white;
         }
-
         .btn-confirmada {
-            background-color: #0a73ec;
-            /* Azul para confirmada */
+            background-color: #00a859;
         }
-
         .btn-pendiente {
             background-color: #fab026;
-            /* Naranja para pendiente */
-            color: white;
         }
-
-        /* Aquí van los estilos de la segunda columna de las reservas */
-        .btn-confirmada1 {
-            background-color: #0a73ec;
-            color: white;
-        }
-
-        .btn-pendiente1 {
-            background-color: #fab026;
-        }
-
-        .btn-reservada1 {
-            background-color: #00a859;
-            color: white;
-        }
-
-        .status-container {
-            display: flex;
-            gap: 5px;
-        }
-
-        .btn-status:disabled {
-            padding: 5px 10px;
-            font-weight: bold;
-            border-radius: 5px;
-            background-color: #808080;
-            /* Gris para los botones deshabilitados */
-            color: #fff;
-            /* Texto blanco */
-            cursor: not-allowed;
-            /* Cursor de no permitido */
-        }
-
         .btn-excel {
             background-color: #00a859;
-            /* Verde para el botón de Excel */
             color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
         }
-
-        .btn-excel i {
-            margin-right: 5px;
-        }
-
-        .dataTables_wrapper .dataTables_paginate {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .dataTables_wrapper .dataTables_info {
-            display: none;
-        }
-
-        .dataTables_wrapper .dataTables_length {
-            display: none;
-        }
-
         table.dataTable thead th {
             background-color: #212529;
-            /* Fondo oscuro para el encabezado de la tabla */
             color: #fff;
-            /* Texto blanco para el encabezado de la tabla */
         }
-
         table.dataTable tbody tr {
             background-color: #343a40;
-            /* Fondo oscuro para las filas de la tabla */
             color: #fff;
-            /* Texto blanco para las filas de la tabla */
         }
-
-        table.dataTable tbody td {
-            white-space: nowrap;
-            /* Evita que el contenido se rompa en varias líneas */
-        }
-
-        /* Estilos para el menú de navegación */
-        .left-sidebar {
-            background-color: #ffffff;
-            /* Fondo blanco para el menú lateral */
-        }
-
-        .sidebar-link {
-            color: #333;
-            /* Texto oscuro para los enlaces del menú lateral */
-        }
-
-        .sidebar-link:hover {
-            background-color: #333;
-            /* Fondo gris oscuro al pasar el cursor */
-            color: #00a859;
-            /* Color verde para el texto al pasar el cursor */
-        }
-
-        .app-header {
-            background-color: #ffffff;
-            /* Fondo blanco para el encabezado */
-        }
-
-        .navbar-nav .nav-link {
-            color: #333;
-            /* Texto oscuro para los enlaces del encabezado */
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: #00a859;
-            /* Color verde para el texto al pasar el cursor */
-        }
-
-        .btn-primary {
+        .back-to-home {
+            display: block;
+            margin: 10px auto;
+            padding: 5px 10px;
             background-color: #00a859;
-            /* Verde para los botones primarios */
-            border-color: #00a859;
-            /* Borde verde para los botones primarios */
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
-
-        .btn-primary:hover {
-            background-color: #008f5d;
-            /* Verde más oscuro al pasar el cursor */
-            border-color: #008f5d;
-            /* Borde verde más oscuro al pasar el cursor */
+        .back-to-home:hover {
+            background-color: #008f4c;
         }
-
-        .btn-outline-primary {
-            color: #00a859;
-            /* Color verde para el borde del botón primario */
-            border-color: #00a859;
-            /* Borde verde para el botón primario */
-        }
-
-        .btn-outline-primary:hover {
-            color: #008f5d;
-            /* Color verde más oscuro al pasar el cursor */
-            border-color: #008f5d;
-            /* Borde verde más oscuro al pasar el cursor */
-        }
-
-        .btn-outline-danger {
-            color: #e74c3c;
-            /* Color rojo para el borde del botón de eliminar */
-            border-color: #e74c3c;
-            /* Borde rojo para el botón de eliminar */
-        }
-
-        .btn-outline-danger:hover {
-            color: #c0392b;
-            /* Rojo más oscuro al pasar el cursor */
-            border-color: #c0392b;
-            /* Borde rojo más oscuro al pasar el cursor */
-        }
-
-        h5.card-title {
-            color: #00a859;
-            /* Color verde para los títulos de las tarjetas */
+        .brand-logo {
+            background-color: #212529;
         }
     </style>
+</head>
+
+<body>
+    <!-- Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed">
+        <!-- Sidebar Start -->
         <aside class="left-sidebar">
+            <!-- Sidebar scroll-->
             <div>
                 <div class="brand-logo d-flex align-items-center justify-content-between">
-                    <a href="./index.html" class="text-nowrap logo-img">
-                        <img src="../assets/images/logos/nidosky.png" width="180" alt="" />
+                    <a href="./dashboard.html" class="text-nowrap logo-img">
+                        <img src="../assets/images/logos/nidosky.png" width="180" alt="Nido Sky Logo" />
                     </a>
                     <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
                         <i class="ti ti-x fs-8"></i>
                     </div>
                 </div>
+                <!-- Sidebar navigation-->
                 <nav class="sidebar-nav scroll-sidebar" data-simplebar="">
                     <ul id="sidebarnav">
-                        <li class="sidebar-item"><a class="sidebar-link" href="./Roles.html"><i
-                                    class="ti ti-id-badge"></i><span class="hide-menu">Roles</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="./Registro.html"><i
-                                    class="ti ti-user"></i><span class="hide-menu">Login</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="./Dashboard.html"><i
-                                    class="ti ti-layout-dashboard"></i><span class="hide-menu">Dashboard</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="./apartamentos.html"><i
-                                    class="ti ti-home"></i><span class="hide-menu">Apartamentos</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="./descuentos.html"><i
-                                    class="ti ti-tag"></i><span class="hide-menu">Descuentos</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="./reservas.html"><i
-                                    class="ti ti-calendar"></i><span class="hide-menu">Reservas</span></a></li>
-                        <li class="sidebar-item"><a class="sidebar-link" href="./hospedaje.html"><i
-                                    class="ti ti-hotel"></i><span class="hide-menu">Hospedaje</span></a></li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./dashboard.html" aria-expanded="false">
+                                <span><i class="ti ti-layout-dashboard"></i></span>
+                                <span class="hide-menu">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./apartamentos.html" aria-expanded="false">
+                                <span><i class="ti ti-home"></i></span>
+                                <span class="hide-menu">Apartamentos</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./descuentos.html" aria-expanded="false">
+                                <span><i class="ti ti-tag"></i></span>
+                                <span class="hide-menu">Descuentos</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./reservas.html" aria-expanded="false">
+                                <span><i class="ti ti-calendar"></i></span>
+                                <span class="hide-menu">Reservas</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./hospedaje.html" aria-expanded="false">
+                                <span><i class="ti ti-hotel"></i></span>
+                                <span class="hide-menu">Hospedaje</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./Roles.html" aria-expanded="false">
+                                <span><i class="ti ti-id-badge"></i></span>
+                                <span class="hide-menu">Roles</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="./Formulario.html" aria-expanded="false">
+                                <span><i class="ti ti-user"></i></span>
+                                <span class="hide-menu">Login</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
+                <!-- End Sidebar navigation -->
             </div>
+            <!-- End Sidebar scroll-->
         </aside>
+        <!-- Sidebar End -->
+
+        <!-- Main wrapper -->
         <div class="body-wrapper">
+            <!-- Header Start -->
             <header class="app-header">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <ul class="navbar-nav">
-                        <li class="nav-item d-block d-xl-none"><a class="nav-link sidebartoggler nav-icon-hover"
-                                id="headerCollapse" href="javascript:void(0)"><i class="ti ti-menu-2"></i></a></li>
-                        <li class="nav-item"><a class="nav-link nav-icon-hover" href="javascript:void(0)"><i
-                                    class="ti ti-bell-ringing"></i>
+                        <li class="nav-item d-block d-xl-none">
+                            <a class="nav-link sidebartoggler nav-icon-hover" id="headerCollapse"
+                                href="javascript:void(0)">
+                                <i class="ti ti-menu-2"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-icon-hover" href="javascript:void(0)">
+                                <i class="ti ti-bell-ringing"></i>
                                 <div class="notification bg-primary rounded-circle"></div>
-                            </a></li>
+                            </a>
+                        </li>
                     </ul>
                     <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
                         <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
@@ -263,25 +162,25 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link nav-icon-hover" href="javascript:void(0)" id="drop2"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="../assets/images/profile/user-1.jpg" alt="" width="35" height="35"
-                                        class="rounded-circle" />
+                                    <img src="../assets/images/profile/user-1.jpg" alt="User Profile" width="35"
+                                        height="35" class="rounded-circle">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up"
                                     aria-labelledby="drop2">
                                     <div class="message-body">
                                         <a href="javascript:void(0)"
-                                            class="d-flex align-items-center gap-2 dropdown-item"><i
-                                                class="ti ti-user fs-6"></i>
+                                            class="d-flex align-items-center gap-2 dropdown-item">
+                                            <i class="ti ti-user fs-6"></i>
                                             <p class="mb-0 fs-3">My Profile</p>
                                         </a>
                                         <a href="javascript:void(0)"
-                                            class="d-flex align-items-center gap-2 dropdown-item"><i
-                                                class="ti ti-mail fs-6"></i>
+                                            class="d-flex align-items-center gap-2 dropdown-item">
+                                            <i class="ti ti-mail fs-6"></i>
                                             <p class="mb-0 fs-3">My Account</p>
                                         </a>
                                         <a href="javascript:void(0)"
-                                            class="d-flex align-items-center gap-2 dropdown-item"><i
-                                                class="ti ti-list-check fs-6"></i>
+                                            class="d-flex align-items-center gap-2 dropdown-item">
+                                            <i class="ti ti-list-check fs-6"></i>
                                             <p class="mb-0 fs-3">My Task</p>
                                         </a>
                                         <a href="./authentication-login.html"
@@ -293,483 +192,441 @@
                     </div>
                 </nav>
             </header>
+            <!-- Header End -->
+
             <div class="container-fluid">
                 <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title fw-semibold mb-4">Reservas</h5>
-                    </div>
                     <div class="card-body">
+                        <h5 class="card-title fw-semibold mb-4">Gestión de Reservas</h5>
                         <div class="d-flex justify-content-between align-items-center mb-4">
-                            <button class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#createReservationModal"><i class="ti ti-plus"></i></button>
-                            <div class="input-group" style="max-width: 300px">
-                                <input type="text" class="form-control" placeholder="Buscar" aria-label="search" />
-                            </div>
-                            <button class="btn btn-excel"><i class="ti ti-file-export"></i> Exportar a Excel</button>
-                        </div>
-
-
-                        <!-- Modal para crear reserva -->
-                        <div class="modal fade" id="createReservationModal" tabindex="-1"
-                            aria-labelledby="createReservationModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="createReservationModalLabel">Crear Nueva Reserva
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="createReservationForm" novalidate>
-                                            <div class="row">
-                                                <!-- Formulario de cliente -->
-                                                <div class="col-md-6">
-                                                    <h5>Datos del Cliente</h5>
-                                                    <div class="mb-3">
-                                                        <label for="nombre" class="form-label">Nombre</label>
-                                                        <input type="text" class="form-control" id="nombre" required
-                                                            pattern="[a-zA-Z\s]+"
-                                                            title="Solo se permiten letras y espacios." />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="apellido" class="form-label">Apellido</label>
-                                                        <input type="text" class="form-control" id="apellido" required
-                                                            pattern="[a-zA-Z\s]+"
-                                                            title="Solo se permiten letras y espacios." />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="tipoDoc" class="form-label">Tipo de
-                                                            documento</label>
-                                                        <select class="form-select" id="tipoDoc" required>
-                                                            <option value="">Seleccione un tipo de documento</option>
-                                                            <option value="CC">C.C</option>
-                                                            <option value="TI">T.I</option>
-                                                            <option value="PP">P.P</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="numDoc" class="form-label">N° Documento</label>
-                                                        <input type="number" class="form-control" id="numDoc" required
-                                                            minlength="5" />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="telefono" class="form-label">Teléfono</label>
-                                                        <input type="number" class="form-control" id="telefono"
-                                                            required />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="correo" class="form-label">Correo
-                                                            electrónico</label>
-                                                        <input type="email" class="form-control" id="correo" required />
-                                                    </div>
-                                                </div>
-
-                                                <!-- Formulario de reserva -->
-                                                <div class="col-md-6">
-                                                    <h5>Datos de Reserva</h5>
-                                                    <div class="mb-3">
-                                                        <label for="numReserva" class="form-label">N° Reserva</label>
-                                                        <input type="number" class="form-control" id="numReserva"
-                                                            required />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="fechaReserva" class="form-label">Fecha de
-                                                            reserva</label>
-                                                        <input type="date" class="form-control" id="fechaReserva"
-                                                            required />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="fechaDesde" class="form-label">Desde</label>
-                                                        <input type="date" class="form-control" id="fechaDesde"
-                                                            required />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="fechaHasta" class="form-label">Hasta</label>
-                                                        <input type="date" class="form-control" id="fechaHasta"
-                                                            required />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="numAcompañantes" class="form-label">Número de
-                                                            acompañantes</label>
-                                                        <input type="number" class="form-control" id="numAcompañantes"
-                                                            required />
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="tipoApto" class="form-label">Tipo de
-                                                            apartamento</label>
-                                                        <select class="form-select" id="tipoApto" required>
-                                                            <option value="">Seleccione un tipo de Apartamento</option>
-                                                            <option value="tipo1">Tipo 1</option>
-                                                            <option value="tipo2">Tipo 2</option>
-                                                            <option value="Penthouse">Penthouse</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="comprobante" class="form-label">Comprobante de
-                                                            pago</label>
-                                                        <input type="file" class="form-control" id="comprobante"
-                                                            required />
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-primary">Hecho!</button>
-                                                    <button type="button" class="btn btn-secondary"
-                                                        id="btnCancelarReserva"
-                                                        data-bs-dismiss="modal">Cancelar</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal para editar reserva -->
-                        <div class="modal fade" id="editReservationModal" tabindex="-1"
-                            aria-labelledby="editReservationModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editReservationModalLabel">Editar Reserva</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="editReservationForm">
-                                            <div class="mb-3">
-                                                <label for="cliente" class="form-label">Cliente</label>
-                                                <input type="text" class="form-control" id="cliente" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="fInicio" class="form-label">Fecha de Inicio</label>
-                                                <input type="date" class="form-control" id="fInicio" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="fFin" class="form-label">Fecha de Fin</label>
-                                                <input type="date" class="form-control" id="fFin" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="FechaReserva" class="form-label">Fecha de la reserva</label>
-                                                <input type="date" class="form-control" id="FechaReserva" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="tipoApartamento" class="form-label">Tipo de
-                                                    apartamento</label>
-                                                <select class="form-select" id="tipoApartamento" required>
-                                                    <option value="tipo1">Tipo 1</option>
-                                                    <option value="tipo2">Tipo 2</option>
-                                                    <option value="penthouse">Penthouse</option>
-                                                </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="acompañantes" class="form-label">Acompañantes</label>
-                                                <input type="number" class="form-control" id="acompañantes" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="total" class="form-label">Total</label>
-                                                <input type="number" class="form-control" id="total" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="estado" class="form-label">Estado</label>
-                                                <select class="form-select" id="estado" required>
-                                                    <option value="confirmada">Confirmada</option>
-                                                    <option value="pendiente">Pendiente</option>
-                                                    <option value="cancelada">Cancelada</option>
-                                                </select>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Actualizar Reserva</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reservationModal">
+                                <i class="ti ti-plus"></i> Nueva Reserva
+                            </button>
+                            <button class="btn btn-excel" id="exportToExcelBtn">
+                                <i class="ti ti-file-export"></i> Exportar a Excel
+                            </button>
                         </div>
 
                         <div class="table-responsive">
-                            <table id="reservasTable" class="table">
+                            <table id="reservasTable" class="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th scope="col">IdReserva</th>
-                                        <th scope="col">Cliente</th>
-                                        <th scope="col">FInicio</th>
-                                        <th scope="col">FFin</th>
-                                        <th scope="col">FReserv</th>
-                                        <th scope="col">Total</th>
-                                        <th scope="col">Estado</th>
-                                        <th scope="col">Acciones</th>
-                                        <th scope="col">Opciones</th>
+                                        <th>N°Reserva</th>
+                                        <th>Cliente</th>
+                                        <th>Apellido</th>
+                                        <th>TipoDoc</th>
+                                        <th>DocCliente</th>
+                                        <th>Telefono</th>
+                                        <th>Correo</th>
+                                        <th>N°Acompañantes</th>
+                                        <th>FInicio</th>
+                                        <th>FFin</th>
+                                        <th>Num. Apto(s)</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>10010</td>
-                                        <td>Pedro</td>
-                                        <td>01/05/2024</td>
-                                        <td>07/05/2024</td>
-                                        <td>20/04/2024</td>
-                                        <td>$1,000,000</td>
-                                        <td>cancelada</td>
-                                        <td>
-                                            <div class="status-container">
-                                                <button class="btn-status" title="Reservada">R</button>
-                                                <button class="btn-status" title="Confirmada">C</button>
-                                                <button class="btn-status" title="Pendiente">P</button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-primary"><i class="ti ti-pencil"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editReservationModal"></i></i></button>
-                                            <button class="btn btn-sm btn-outline-danger"><i
-                                                    class="ti ti-eye"></i></button>
-                                            <button class="btn btn-sm btn-outline-warning"><i
-                                                    class="ti ti-loader"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>10011</td>
-                                        <td>Maria</td>
-                                        <td>08/05/2024</td>
-                                        <td>16/05/2024</td>
-                                        <td>02/05/2024</td>
-                                        <td>$1,220,000</td>
-                                        <td>pendiente</td>
-                                        <td>
-                                            <div class="status-container">
-                                                <button class="btn-status" title="Reservada">R</button>
-                                                <button class="btn-status" title="Confirmada">C</button>
-                                                <button class="btn-status" title="Pendiente">P</button>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-sm btn-outline-primary"><i class="ti ti-pencil"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#editReservationModal"></i></i></button>
-                                            <!-- Botón "Ver Detalles" -->
-                                            <button class="btn btn-sm btn-outline-danger btn-view-details" data-id="1">
-                                                <i class="ti ti-eye"></i>
-                                            </button>
-
-                                            <!-- Modal para mostrar detalles -->
-                                            <div class="modal fade" id="viewDetailsModal" tabindex="-1"
-                                                aria-labelledby="viewDetailsModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="viewDetailsModalLabel">Detalles
-                                                                de la Reserva</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <!-- Aquí van los detalles que quieras mostrar -->
-                                                            <p id="reservationDetails"></p>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Cerrar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-sm btn-outline-warning"><i
-                                                    class="ti ti-loader"></i></button>
-                                        </td>
-                                    </tr>
+                                <tbody id="reservasBody">
+                                    <!-- Las filas de reservas se agregarán aquí dinámicamente -->
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Modal para crear/editar reserva -->
+            <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="reservationModalLabel">Crear/Editar Reserva</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="reservationForm">
+                                <input type="hidden" id="reservationId">
+                                <div class="row">
+                                    <form>
+                                        <div class="row">
+                                            <!-- Datos del Cliente -->
+                                            <div class="col-md-6">
+                                                <h5>Datos del Cliente</h5>
+                                                <div class="mb-3">
+                                                    <label for="cliente" class="form-label">Nombre</label>
+                                                    <input type="text" class="form-control" id="cliente" name="cliente"
+                                                        required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="apellido" class="form-label">Apellido</label>
+                                                    <input type="text" class="form-control" id="apellido"
+                                                        name="apellido" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="tipoDoc" class="form-label">Tipo de documento</label>
+                                                    <select class="form-select" id="tipoDoc" name="tipoDoc" required>
+                                                        <option value="CC">C.C</option>
+                                                        <option value="TI">T.I</option>
+                                                        <option value="PP">P.P</option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="numDoc" class="form-label">N° Documento</label>
+                                                    <input type="text" class="form-control" id="numDoc" name="numDoc"
+                                                        required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="telefono" class="form-label">Teléfono</label>
+                                                    <input type="tel" class="form-control" id="telefono" name="telefono"
+                                                        required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="correo" class="form-label">Correo electrónico</label>
+                                                    <input type="email" class="form-control" id="correo" name="correo"
+                                                        required>
+                                                </div>
+                                            </div>
 
+                                            <!-- Datos de la Reserva -->
+                                            <div class="col-md-6">
+                                                <h5>Datos de la Reserva</h5>
+                                                <div class="mb-3">
+                                                    <label for="numReserva" class="form-label">N° Reserva</label>
+                                                    <input type="text" class="form-control" id="numReserva"
+                                                        name="numReserva" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="acompañantes" class="form-label">Número de
+                                                        acompañantes</label>
+                                                    <input type="number" class="form-control" id="acompañantes"
+                                                        name="acompañantes" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="fInicio" class="form-label">Fecha de Inicio</label>
+                                                    <input type="date" class="form-control" id="fInicio" name="fInicio"
+                                                        required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="fFin" class="form-label">Fecha de Fin</label>
+                                                    <input type="date" class="form-control" id="fFin" name="fFin"
+                                                        required>
+                                                </div>
 
+                                                <!-- Apartamentos -->
+                                                <div id="apartamentosContainer">
+                                                    <div class="mb-3">
+                                                        <label for="apartamentos" class="form-label">Apartamento</label>
+                                                        <select class="form-select" id="apartamentos"
+                                                            name="apartamentos[]" required>
+                                                            <option value="1">Apartamento 1 (Tipo 1)</option>
+                                                            <option value="2">Apartamento 2 (Tipo 1)</option>
+                                                            <option value="3">Apartamento 3 (Tipo 1)</option>
+                                                            <option value="4">Apartamento 4 (Tipo 1)</option>
+                                                            <option value="5">Apartamento 5 (Tipo 1)</option>
+                                                            <option value="6">Apartamento 6 (Tipo 1)</option>
+                                                            <option value="7">Apartamento 7 (Tipo 1)</option>
+                                                            <option value="8">Apartamento 8 (Tipo 1)</option>
+                                                            <option value="9">Apartamento 9 (Tipo 2)</option>
+                                                            <option value="10">Apartamento 10 (Tipo 2)</option>
+                                                            <option value="11">Apartamento 11 (Tipo 2)</option>
+                                                            <option value="12">Apartamento 12 (Tipo 2)</option>
+                                                            <option value="13">Apartamento 13 (Tipo 2)</option>
+                                                            <option value="14">Apartamento 14 (Tipo 2)</option>
+                                                            <option value="15">Apartamento 15 (Tipo 2)</option>
+                                                            <option value="16">Apartamento 16 (Penthouse)</option>
+                                                            <option value="17">Apartamento 17 (Penthouse)</option>
+                                                            <option value="18">Apartamento 18 (Penthouse)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-success" id="addAptoBtn">Agregar
+                                                    otro apartamento</button>
+
+                                                <div class="mb-3">
+                                                    <label for="total" class="form-label">Total a pagar</label>
+                                                    <input type="number" class="form-control" id="total" name="total"
+                                                        required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="estado" class="form-label">Estado</label>
+                                                    <select class="form-select" id="estado" name="estado" required>
+                                                        <option value="confirmado">Confirmado</option>
+                                                        <option value="pendiente">Pendiente</option>
+                                                        <option value="cancelado">Cancelado</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">Guardar Reserva</button>
+                                        </div>
+                                    </form>
+
+                                </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    </div>
+
+    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/sidebarmenu.js"></script>
+    <script src="../assets/js/scripts.min.js"></script>
+    <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
     <script>
         $(document).ready(function () {
+            const apiUrl = 'http://localhost:3001/api/reservas';
+            let dataTable;
 
-// Inicialización de DataTable con opciones
-function initDataTable() {
-    $("#reservasTable").DataTable({
-        paging: true,
-        searching: false,
-        ordering: true,
-        lengthChange: false,
-    });
-}
+            // Inicialización de DataTable con opciones
+            function initDataTable(data) {
+                if ($.fn.DataTable.isDataTable('#reservasTable')) {
+                    $('#reservasTable').DataTable().destroy();
+                }
+                dataTable = $("#reservasTable").DataTable({
+                    data: data,
+                    columns: [
+                        { data: 'numReserva' },
+                        { data: 'cliente' },
+                        { data: 'apellido' },
+                        { data: 'tipoDoc' },
+                        { data: 'numDoc' },
+                        { data: 'telefono' },
+                        { data: 'correo' },
+                        { data: 'acompañantes' },
+                        { data: 'fInicio' },
+                        { data: 'fFin' },
+                        {
+                            data: 'apartamentos',
+                            render: function (data) {
+                                return Array.isArray(data)
+                                    ? data.map(apto => `Apto ${apto.num} (${apto.tipo})`).join(', ')
+                                    : 'No especificado';
+                            }
+                        },
+                        { data: 'total' },
+                        { data: 'estado' },
+                        {
+                            data: null,
+                            render: function (data, type, row) {
+                                return `
+                            <button class="btn btn-sm btn-info btn-view" title="Ver">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn btn-sm btn-primary btn-edit" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger btn-delete" title="Eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        `;
+                            }
+                        }
+                    ],
+                    paging: true,
+                    pageLength: 10,
+                    lengthChange: false,
+                    searching: true,
+                    ordering: true,
+                    info: true,
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
+                    }
+                });
+            }
 
-// Manejo de los botones de estado en la tabla
-function handleStatusButtons() {
-    $('.status-container .btn-status').on('click', function () {
-        const row = $(this).closest('tr');
+            // Cargar datos desde la API
+            function loadReservations() {
+                $.ajax({
+                    url: apiUrl,
+                    method: 'GET',
+                    success: function (data) {
+                        initDataTable(data);
+                    },
+                    error: function (error) {
+                        console.error('Error al cargar las reservas:', error);
+                        Swal.fire('Error', 'No se pudieron cargar las reservas', 'error');
+                    }
+                });
+            }
 
-        // Deshabilitar todos los botones de estado en la fila
-        row.find('.btn-status').prop('disabled', true).css({ 'background-color': '#808080', 'color': '#fff' });
+            // Crear nueva reserva
+            $('#reservationForm').on('submit', function (e) {
+                e.preventDefault();
 
-        // Activar el botón que fue clickeado
-        $(this).prop('disabled', false);
+                // Validación de acompañantes
+                const numAcompanantes = parseInt($('#acompañantes').val());
+                if (isNaN(numAcompanantes) || numAcompanantes < 0 || numAcompanantes > 3) {
+                    Swal.fire('Error', 'El número de acompañantes debe ser entre 0 y 3', 'error');
+                    return;
+                }
 
-        // Obtener el estado y actualizar el campo de estado en la tabla
-        const estado = $(this).attr('title');
-        row.find('td:nth-child(7)').text(estado.toLowerCase());
+                // Capturar los apartamentos seleccionados
+                const apartamentos = [];
+                $('#apartamentosContainer select[name="apartamentos[]"]').each(function () {
+                    const aptoNum = $(this).val();
+                    const aptoTipo = $(this).find('option:selected').text().match(/$$(.*?)$$/)[1];
+                    apartamentos.push({ num: aptoNum, tipo: aptoTipo });
+                });
 
-        // Mostrar mensaje de estado actualizado
-        alert('Estado cambiado a: ' + estado);
-    });
-}
+                // Capturar datos del formulario
+                const formData = new FormData(this);
+                let reservationData = Object.fromEntries(formData.entries());
+                reservationData.apartamentos = apartamentos;
 
-// Validación del formulario de creación de reserva
-function validateCreateReservationForm() {
-    const cliente = $('#cliente').val().trim();
-    const fInicio = $('#fInicio').val();
-    const fFin = $('#fFin').val();
-    const total = parseFloat($('#total').val());
-    const estado = $('#estado').val();
-    const acompañantes = parseInt($('#acompañantes').val());
+                const id = $('#reservationId').val();
+                const method = id ? 'PUT' : 'POST';
+                const url = id ? `${apiUrl}/${id}` : apiUrl;
 
-    // // Validaciones básicas
-    // if (!cliente || !fInicio || !fFin || !total || !estado || !acompañantes) {
-    //     Swal.fire({
-    //         title: '¡Error!',
-    //         text: 'Por favor completa todos los campos obligatorios.',
-    //         icon: 'error',
-    //         confirmButtonText: 'Intentar de nuevo'
-    //     });
-    //     return false;
-    // }
+                console.log('Datos de la reserva a enviar:', reservationData);
 
-    // Validación del nombre
-    // const nameRegex = /^[a-zA-Z\s]+$/;
-    // if (!nameRegex.test(cliente)) {
-    //     Swal.fire({
-    //         title: '¡Error!',
-    //         text: 'El nombre solo puede contener letras y espacios.',
-    //         icon: 'error',
-    //         confirmButtonText: 'Intentar de nuevo'
-    //     });
-    //     return false;
-    // }
+                $.ajax({
+                    url: url,
+                    method: method,
+                    data: JSON.stringify(reservationData),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        $('#reservationModal').modal('hide');
+                        loadReservations();
+                        Swal.fire('Éxito', id ? 'Reserva actualizada correctamente' : 'Reserva creada correctamente', 'success');
+                    },
+                    error: function (error) {
+                        console.error('Error al guardar la reserva:', error);
+                        Swal.fire('Error', 'No se pudo guardar la reserva', 'error');
+                    }
+                });
+            });
 
-    // Validación del número de acompañantes
-    if (acompañantes < 1 || acompañantes > 3) {
-        Swal.fire({
-            title: '¡Error!',
-            text: 'El número de acompañantes debe estar entre 1 y 3.',
-            icon: 'error',
-            confirmButtonText: 'Intentar de nuevo'
+            // Editar reserva
+            $('#reservasTable').on('click', '.btn-edit', function () {
+                const data = dataTable.row($(this).parents('tr')).data();
+                $('#reservationId').val(data._id);
+                $('#numReserva').val(data.numReserva);
+                $('#cliente').val(data.cliente);
+                $('#apellido').val(data.apellido);
+                $('#tipoDoc').val(data.tipoDoc);
+                $('#numDoc').val(data.numDoc);
+                $('#telefono').val(data.telefono);
+                $('#correo').val(data.correo);
+                $('#acompañantes').val(data.acompañantes);
+                $('#fInicio').val(data.fInicio);
+                $('#fFin').val(data.fFin);
+                $('#total').val(data.total);
+                $('#estado').val(data.estado);
+
+                // Limpiar y agregar los apartamentos actuales
+                $('#apartamentosContainer').empty();
+                data.apartamentos.forEach(apto => {
+                    const newAptoField = `
+                <div class="mb-3">
+                    <label for="numApto" class="form-label">Apartamento</label>
+                    <select class="form-select" name="apartamentos[]" required>
+                        <option value="1" ${apto.num == 1 ? 'selected' : ''}>Apartamento 1 (Tipo 1)</option>
+                        <!-- Agregar más opciones aquí -->
+                    </select>
+                </div>`;
+                    $('#apartamentosContainer').append(newAptoField);
+                });
+
+                $('#reservationModal').modal('show');
+            });
+
+            // Ver detalles de la reserva
+            $('#reservasTable').on('click', '.btn-view', function () {
+                const data = dataTable.row($(this).parents('tr')).data();
+                let detailsHtml = `
+            <p><strong>N° Reserva:</strong> ${data.numReserva}</p>
+            <p><strong>Cliente:</strong> ${data.cliente} ${data.apellido}</p>
+            <p><strong>Tipo de Documento:</strong> ${data.tipoDoc}</p>
+            <p><strong>N° Documento:</strong> ${data.numDoc}</p>
+            <p><strong>Teléfono:</strong> ${data.telefono}</p>
+            <p><strong>Correo:</strong> ${data.correo}</p>
+            <p><strong>N° Acompañantes:</strong> ${data.acompañantes}</p>
+            <p><strong>Fecha de Inicio:</strong> ${data.fInicio}</p>
+            <p><strong>Fecha de Fin:</strong> ${data.fFin}</p>
+            <p><strong>Apartamentos:</strong> ${data.apartamentos.map(apto => `Apto ${apto.num} (${apto.tipo})`).join(', ')}</p>
+            <p><strong>Total:</strong> ${data.total}</p>
+            <p><strong>Estado:</strong> ${data.estado}</p>
+        `;
+                Swal.fire({
+                    title: 'Detalles de la Reserva',
+                    html: detailsHtml,
+                    confirmButtonText: 'Cerrar'
+                });
+            });
+
+            // Eliminar reserva
+            $('#reservasTable').on('click', '.btn-delete', function () {
+                const data = dataTable.row($(this).parents('tr')).data();
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "No podrás revertir esta acción",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: `${apiUrl}/${data._id}`,
+                            method: 'DELETE',
+                            success: function () {
+                                loadReservations();
+                                Swal.fire('Eliminado', 'La reserva ha sido eliminada', 'success');
+                            },
+                            error: function (error) {
+                                console.error('Error al eliminar la reserva:', error);
+                                Swal.fire('Error', 'No se pudo eliminar la reserva', 'error');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Exportar a Excel
+            $('#exportToExcelBtn').on('click', function () {
+                const ws = XLSX.utils.table_to_sheet(document.getElementById("reservasTable"));
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Reservas");
+                XLSX.writeFile(wb, "Reservas.xlsx");
+            });
+
+            // Validación en tiempo real
+            $('#reservationForm input, #reservationForm select').on('input change', function () {
+                if ($(this).prop('required') && !$(this).val()) {
+                    $(this).addClass('is-invalid');
+                } else {
+                    $(this).removeClass('is-invalid');
+                }
+            });
+
+            // Botón para agregar otro apartamento
+            document.getElementById('addAptoBtn').addEventListener('click', function () {
+                const container = document.getElementById('apartamentosContainer');
+                const newAptoFields = container.firstElementChild.cloneNode(true);
+                newAptoFields.querySelector('select').value = ''; // Limpiar selección
+                container.appendChild(newAptoFields);
+            });
+
+            // Cargar reservas al iniciar
+            loadReservations();
         });
-        return false;
-    }
-
-    // Validación del total
-    if (total <= 0) {
-        Swal.fire({
-            title: '¡Error!',
-            text: 'El total debe ser un número positivo.',
-            icon: 'error',
-            confirmButtonText: 'Intentar de nuevo'
-        });
-        return false;
-    }
-
-    return true;
-}
-
-// Manejo de la creación de nueva reserva
-function handleCreateReservation() {
-    $('#createReservationForm').on('submit', function (e) {
-        e.preventDefault();
-
-        if (!validateCreateReservationForm()) return;
-
-        const cliente = $('#cliente').val();
-        const fInicio = $('#fInicio').val();
-        const fFin = $('#fFin').val();
-        const total = $('#total').val();
-        const estado = $('#estado').val();
-
-        console.log("Nueva Reserva:", { cliente, fInicio, fFin, total, estado });
-
-        // Cerrar el modal después de crear la reserva
-        $('#createReservationModal').modal('hide');
-
-        // Limpiar el formulario
-        $(this).trigger("reset");
-
-        Swal.fire({
-            title: '¡Éxito!',
-            text: 'La reserva se ha creado correctamente.',
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-        });
-    });
-}
-
-// Manejo de la edición de una reserva
-function handleEditReservation() {
-    $('#editReservationForm').on('submit', function (e) {
-        e.preventDefault();
-
-        // Aquí puedes agregar lógica adicional de validación si es necesario
-
-        Swal.fire({
-            title: '¡Éxito!',
-            text: 'La reserva se ha actualizado correctamente.',
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-        });
-    });
-}
-
-// Exportación de la tabla a Excel
-function handleExportToExcel() {
-    $('.btn-excel').on('click', function () {
-        const table = document.getElementById('reservasTable');
-        const workbook = XLSX.utils.table_to_book(table, { sheet: "Reservas" });
-        XLSX.writeFile(workbook, 'reservas.xlsx');
-    });
-}
-
-// Manejo de la vista de detalles de la reserva
-function handleViewDetails() {
-    $('.btn-view-details').on('click', function () {
-        const reservationId = $(this).data('id');
-        const detallesReserva = "Detalles de la reserva con ID: " + reservationId;
-
-        $('#reservationDetails').text(detallesReserva);
-        $('#viewDetailsModal').modal('show');
-    });
-}
-
-// Inicializar funciones
-initDataTable();
-handleStatusButtons();
-handleCreateReservation();
-handleEditReservation();
-handleExportToExcel();
-handleViewDetails();
-});
-
-</script>
-
+    </script>
 </body>
 
 </html>

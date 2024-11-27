@@ -3,229 +3,162 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Nido Sky</title>
+    <title>Login - Nido Sky</title>
     <link
       rel="shortcut icon"
       type="image/png"
       href="../assets/images/logos/nidosky.png"
     />
-    <link rel="stylesheet" href="../assets/css/styles.min.css" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
       rel="stylesheet"
     />
     <style>
-      /* Fondo general y texto */
       body {
-        background-color: #e0e0e0; /* Fondo oscuro */
-        color: white; /* Texto claro */
+        background-color: #e0e0e0;
+        color: white;
         font-family: Arial, sans-serif;
       }
-
-      /* Estilos del contenedor del formulario */
       .card {
-        background-color: #2c2c2c; /* Fondo oscuro para el formulario */
+        background-color: #2c2c2c;
         color: #fff;
         padding: 40px;
         border-radius: 10px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        margin: 50px auto;
       }
-
-      /* Estilos del título */
       .card-body h2 {
         text-align: center;
         margin-bottom: 20px;
-        color: #00a859; /* Color dorado */
+        color: #00a859;
       }
-
-      /* Estilos de los inputs y selects */
       .form-control {
         background-color: #333;
         color: white;
         border: 1px solid #444;
         border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 15px;
+        width: 100%;
       }
-
-      /* Estilos del botón de inicio de sesión */
       .btn-primary {
-        background-color: #00a859; /* Color dorado */
+        background-color: #00a859;
         border: none;
         border-radius: 5px;
         color: #fff;
         font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        position: relative; /* Añadido para posicionar el ícono */
+        position: relative;
+        padding: 10px;
+        width: 100%;
       }
-
       .btn-primary:hover {
-        background-color: #008746; /* Color dorado oscuro al hacer hover */
+        background-color: #008746;
       }
-
-      /* Estilo del ícono del ojo */
       .eye-icon {
         position: absolute;
         right: 10px;
-        top: 60%; /* Ajustado para colocar el ícono más abajo */
+        top: 60%;
         transform: translateY(-50%);
         font-size: 18px;
         color: #fff;
         cursor: pointer;
       }
-
-      /* Estilo del campo de contraseña */
       .password-container {
         position: relative;
       }
-
-      .form-control-password {
-        padding-right: 40px; /* Añadido espacio para el ícono */
-      }
-
-      /* Estilo del enlace de recuperación de contraseña y enlace de registro */
-      .text-primary {
-        color: #fff; /* Color blanco para los enlaces */
-      }
-
-      .text-primary:hover {
-        text-decoration: underline;
-        color: #00a859; /* Color dorado al hacer hover */
-      }
-
-      /* Estilo de los textos */
-      .fs-4 {
-        font-size: 1.25rem;
-      }
-
-      .fw-bold {
-        font-weight: 700;
-      }
-
-      /* Estilo para los labels */
-      .form-label {
-        color: white; /* Texto blanco para los labels */
-      }
-
-      /* Estilo para el texto del checkbox */
-      .form-check-label {
-        color: white; /* Texto blanco para los labels de checkbox */
+      .form-control:focus {
+        border-color: #00a859;
+        outline: none;
       }
     </style>
   </head>
-
   <body>
-    <!--  Body Wrapper -->
-    <div
-      class="page-wrapper"
-      id="main-wrapper"
-      data-layout="vertical"
-      data-navbarbg="skin6"
-      data-sidebartype="full"
-      data-sidebar-position="fixed"
-      data-header-position="fixed"
-    >
-      <div
-        class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center"
-      >
-        <div class="d-flex align-items-center justify-content-center w-100">
-          <div class="row justify-content-center w-100">
-            <div class="col-md-8 col-lg-6 col-xxl-3">
-              <div class="card mb-0">
-                <div class="card-body">
-                  <a
-                    href="./index.html"
-                    class="text-nowrap logo-img text-center d-block py-3 w-100"
-                  >
-                    <img
-                      src="../assets/images/logos/nidosky.png"
-                      width="180"
-                      alt=""
-                    />
-                  </a>
-                  <p class="text-center fs-4 fw-bold">Dulce Refugio</p>
-                  <form>
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label"
-                        >Username</label
-                      >
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="exampleInputEmail1"
-                        aria-describedby="emailHelp"
-                      />
-                    </div>
-                    <div class="mb-4 password-container">
-                      <label for="exampleInputPassword1" class="form-label"
-                        >Password</label
-                      >
-                      <input
-                        type="password"
-                        class="form-control form-control-password"
-                        id="exampleInputPassword1"
-                      />
-                      <span class="eye-icon" onclick="togglePassword()">
-                        <i class="bi bi-eye"></i>
-                      </span>
-                    </div>
-                    <div
-                      class="d-flex align-items-center justify-content-between mb-4"
-                    >
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckChecked"
-                          checked
-                        />
-                        <label
-                          class="form-check-label text-light"
-                          for="flexCheckChecked"
-                        >
-                          Remember this Device
-                        </label>
-                      </div>
-                      <a class="text-primary fw-bold" href="./Contrasena.html"
-                        >Forgot Password?</a
-                      >
-                    </div>
-                    <a
-                      href="./Apartamentos.html"
-                      class="btn btn-primary w-100 py-3 fs-4 mb-4 rounded-2"
-                      >Sign In</a
-                    >
-                    <div
-                      class="d-flex align-items-center justify-content-center"
-                    >
-                      <a
-                        class="text-primary fw-bold ms-2"
-                        href="./Registro.html"
-                        >Create an account</a
-                      >
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+    <div class="card">
+      <div class="card-body">
+        <h2>Login</h2>
+        <form id="loginForm">
+          <input
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Nombre de usuario"
+            required
+          />
+          <div class="password-container">
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Contraseña"
+              required
+            />
+            <i
+              class="bi bi-eye-slash eye-icon"
+              id="togglePassword"
+              onclick="togglePassword()"
+            ></i>
           </div>
-        </div>
+          <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        </form>
+        <div id="message" style="color: #ffcc00; text-align: center"></div>
       </div>
     </div>
-    <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-    <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          try {
+            const response = await fetch(
+              "http://localhost:3001/api/login", // Cambiado a "/api/login"
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, password }),
+              }
+            );
+
+            const data = await response.json();
+            const messageElement = document.getElementById("message");
+
+            if (response.ok) {
+              messageElement.innerText = data.message; // Mensaje de éxito
+              alert("Inicio de sesión exitoso!"); // Mensaje de alerta
+              localStorage.setItem("token", data.token); // Guardar token en localStorage
+
+              // Redirigir al dashboard
+              window.location.href =
+                "http://127.0.0.1:5502/src/html/Descuentos.html"; // Asegúrate de que la ruta sea correcta
+            } else {
+              messageElement.innerText = data.message; // Mensaje de error
+              alert("Error: " + data.message); // Mensaje de alerta de error
+            }
+          } catch (error) {
+            console.error("Error:", error);
+            alert("Error en el servidor, por favor intenta de nuevo."); // Mensaje de alerta de error en el servidor
+          }
+        });
+
       function togglePassword() {
-        var passwordField = document.getElementById("exampleInputPassword1");
-        var eyeIcon = document.querySelector(".eye-icon i");
-        if (passwordField.type === "password") {
-          passwordField.type = "text";
-          eyeIcon.classList.remove("bi-eye");
-          eyeIcon.classList.add("bi-eye-slash");
-        } else {
-          passwordField.type = "password";
+        const passwordInput = document.getElementById("password");
+        const eyeIcon = document.getElementById("togglePassword");
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
           eyeIcon.classList.remove("bi-eye-slash");
           eyeIcon.classList.add("bi-eye");
+        } else {
+          passwordInput.type = "password";
+          eyeIcon.classList.remove("bi-eye");
+          eyeIcon.classList.add("bi-eye-slash");
         }
       }
     </script>

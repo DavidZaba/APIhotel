@@ -1,12 +1,11 @@
-// routes/hospedajeRoutes.js
 const express = require('express');
 const router = express.Router();
-const hospedajeController = require('../controllers/hospedajeController'); // Asegúrate de que la ruta sea correcta
+const hospedajeController = require('../controllers/hospedaje.controller');
 
-// Rutas para gestionar hospedaje
-router.get('/', hospedajeController.getEjecuciones); // Verifica que getEjecuciones esté definido en el controlador
-router.post('/', hospedajeController.addEjecucion); 
-router.put('/:id', hospedajeController.updateEjecucion);
-router.delete('/:id', hospedajeController.deleteEjecucion);
+router.post('/', hospedajeController.create);
+router.get('/', hospedajeController.findAll);
+router.get('/:id', hospedajeController.findOne);
+router.put('/:id', hospedajeController.update);
+router.delete('/:id', hospedajeController.delete);
 
 module.exports = router;

@@ -362,12 +362,12 @@
               <h5 class="card-title fw-semibold mb-4">Tipos de Apartamentos</h5>
               <div class="d-flex justify-content-between align-items-center mb-4">
                 <!-- Botón para abrir el modal -->
-                <!-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarAptoModal">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#agregarAptoModal">
                   <i class="ti ti-plus"></i> Agregar tipo de Apartamento
-                </button> -->
-                <!-- <button class="btn btn-excel" id="exportExcel">
+                </button>
+                <button class="btn btn-excel" id="exportExcel">
                   <i class="ti ti-file-export"></i> Exportar a Excel
-                </button> -->
+                </button>
               </div>
               <div class="table-responsive">
                 <table id="apartamentosTable" class="table">
@@ -453,30 +453,58 @@
                   data: null,
                   render: function(data, type, row) {
                     return `
-                      
-                      <label class="switch">
-                <input type="checkbox" ${row.estado === 'activo' ? 'checked' : ''} class="cambiar-estado" data-id="${row._id}">
-                <span class="slider round"></span>
-              </label>
+                      <button class="btn btn-sm btn-outline-primary editar-apto" data-id="${row._id}">
+                        <i class="ti ti-pencil"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger eliminar-apto" data-id="${row._id}">
+                        <i class="ti ti-trash"></i>
+                      </button>
                      
                     `;
                   }
                 },
                 {
-                  data: null,
-                  render: function(data, type, row) {
-                    // URL única para todos los tipos de apartamentos
-                    let url = 'editar_penthouse.html?apartamento=' + row._id; // Cambia 'pagina_unica.html' por la URL que desees
-                    return `
-                      <a href="${url}" class="btn btn-sm btn-outline-info ver-mobiliario">
-                        <i class="ti ti-eye"></i>
-                      </a>
-                    `;
-                  }
-                }
-                
+  data: null,
+  render: function(data, type, row) {
+    // URL única para todos los tipos de apartamentos
+    let url = 'editar_penthouse.html?apartamento=' + row._id; // Cambia 'pagina_unica.html' por la URL que desees
+    return `
+      <a href="${url}" class="btn btn-sm btn-outline-info ver-mobiliario">
+        <i class="ti ti-eye"></i>
+      </a>
+    `;
+  }
+}
+
+//                 {
+//   data: null,
+//   render: function(data, type, row) {
+//     // Define las URLs según el tipo de apartamento
+//     let url = '';
+//     switch(row.tipoApto) {
+//       case 'Penthouse':
+//         url = 'editar_penthouse.html?apartamento=' + row._id;
+//         break;
+//       case 'apartamento1':
+//         url = 'editar_apartamento1.html?apartamento=' + row._id;
+//         break;
+//       case 'Estudio':
+//         url = 'editar_estudio.html?apartamento=' + row._id;
+//         break;
+//       // Añade más casos según sea necesario
+//       default:
+//         url = 'editar_otro.html?apartamento=' + row._id; // Por defecto
+//         break;
+//     }
+//     return `
+//       <a href="${url}" class="btn btn-sm btn-outline-info ver-mobiliario">
+//         <i class="ti ti-eye"></i>
+//       </a>
+//     `;
+//   }
+// }               
               ],
-              pageLength: 10,
+              pageLength: 6,
               lengthChange: false,
               searching: true,
               language: {
@@ -546,35 +574,35 @@
               });
             });
         
-            // // Anular apartamento
-            // $('#apartamentosTable').on('click', '.anular-apto', function() {
-            //   let id = $(this).data('id');
+            // Eliminar apartamento
+            $('#apartamentosTable').on('click', '.eliminar-apto', function() {
+              let id = $(this).data('id');
              
-            //   Swal.fire({
-            //     title: '¿Estás seguro?',
-            //     text: "Esta acción anulará el apartamento",
-            //     icon: 'warning',
-            //     showCancelButton: true,
-            //     confirmButtonColor: '#3085d6',
-            //     cancelButtonColor: '#d33',
-            //     confirmButtonText: 'Sí, anularlo'
-            //   }).then((result) => {
-            //     if (result.isConfirmed) {
-            //       $.ajax({
-            //         url: 'http://localhost:3001/api/tipoapartamentos/' + id + '/anular',
-            //         method: 'PATCH',
-            //         success: function(response) {
-            //           Swal.fire('Anulado', 'El apartamento ha sido anulado.', 'success');
-            //           table.ajax.reload();
-            //         },
-            //         error: function(error) {
-            //           Swal.fire('Error', 'Hubo un error al anular el apartamento.', 'error');
-            //           console.error('Error:', error);
-            //         }
-            //       });
-            //     }
-            //   });
-            // });
+              Swal.fire({
+                title: '¿Estás seguro?',
+                text: "No podrás revertir esta acción",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminarlo'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  $.ajax({
+                    url: 'http://localhost:3001/api/tipoapartamentos/' + id,
+                    method: 'DELETE',
+                    success: function(response) {
+                      Swal.fire('Eliminado', 'El apartamento ha sido eliminado.', 'success');
+                      table.ajax.reload();
+                    },
+                    error: function(error) {
+                      Swal.fire('Error', 'Hubo un error al eliminar el apartamento.', 'error');
+                      console.error('Error:', error);
+                    }
+                  });
+                }
+              });
+            });
         
             // Cambiar estado de apartamento (activo/inactivo)
             $('#apartamentosTable').on('change', '.cambiar-estado', function() {
@@ -582,7 +610,7 @@
               let estado = $(this).is(':checked') ? 'activo' : 'inactivo';
         
               $.ajax({
-                url: 'http://localhost:3001/api/tipoapartamentos/' + id + '/estado',
+                url: 'http://localhost:3001/api/apartamentos/' + id + '/estado',
                 method: 'PATCH',
                 contentType: 'application/json',
                 data: JSON.stringify({ estado: estado }),
@@ -603,7 +631,5 @@
             });
           });
         </script>
-      </div>
-    </div>
-  </body>
+        
 </html>

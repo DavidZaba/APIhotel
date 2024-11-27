@@ -1,4 +1,6 @@
-// controllers/reservaController.js
+//Controlador de reservas actualizado
+
+
 const Reserva = require('../models/Reserva');
 
 // Obtener todas las reservas
@@ -14,16 +16,39 @@ exports.getReservas = async (req, res) => {
 // Agregar reserva
 exports.addReserva = async (req, res) => {
   console.log(req.body);
-  const { cliente, fechainicio, fechafin, fechareserva, total, estado } = req.body;
+  const {
+    numReserva,
+    cliente,
+    apellido,
+    tipoDoc,
+    numDoc,
+    telefono,
+    correo,
+    acompañantes,
+    fInicio,
+    fFin,
+    apartamentos,  // Modificación: ahora manejamos un array de apartamentos
+    total,
+    estado
+  } = req.body;
+
   try {
     const newReserva = new Reserva({
+      numReserva,
       cliente,
-      fechainicio,
-      fechafin,
-      fechareserva,
+      apellido,
+      tipoDoc,
+      numDoc,
+      telefono,
+      correo,
+      acompañantes,
+      fInicio,
+      fFin,
+      apartamentos,  // Almacenamos el array de apartamentos
       total,
       estado
     });
+
     await newReserva.save();
     res.status(201).json(newReserva);
   } catch (error) {
@@ -34,11 +59,40 @@ exports.addReserva = async (req, res) => {
 // Editar reserva
 exports.updateReserva = async (req, res) => {
   const { id } = req.params;
-  const { cliente, fechainicio, fechafin, fechareserva, total, estado } = req.body;
+  const {
+    numReserva,
+    cliente,
+    apellido,
+    tipoDoc,
+    numDoc,
+    telefono,
+    correo,
+    acompañantes,
+    fInicio,
+    fFin,
+    apartamentos,  // Modificación: ahora actualizamos los apartamentos
+    total,
+    estado
+  } = req.body;
+
   try {
     const updatedReserva = await Reserva.findByIdAndUpdate(
       id,
-      { cliente, fechainicio, fechafin, fechareserva, total, estado },
+      {
+        numReserva,
+        cliente,
+        apellido,
+        tipoDoc,
+        numDoc,
+        telefono,
+        correo,
+        acompañantes,
+        fInicio,
+        fFin,
+        apartamentos,  // Actualizamos el array de apartamentos
+        total,
+        estado
+      },
       { new: true }
     );
     res.json(updatedReserva);
